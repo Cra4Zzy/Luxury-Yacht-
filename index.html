@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="AURELIA YACHTS – cinematic luxury yacht showcase website with scroll-directed video sequences." />
+  <title>AURELIA YACHTS · Maritime Cinematic Edition</title>
+  <link rel="preload" href="assets/img/hero-yacht.webp" as="image" />
+  <link rel="preload" href="assets/video/from-vision-scroll.mp4" as="video" type="video/mp4" />
+  <link rel="preload" href="assets/audio/ocean-bg.mp3" as="audio" type="audio/mpeg" />
+  <link rel="preload" href="assets/audio/sonar-intro.mp3" as="audio" type="audio/mpeg" />
+  <link rel="stylesheet" href="assets/css/style.css?v=header-fullwidth-final" />
+</head>
+<body>
+  <div class="intro-experience" data-intro>
+    <picture class="intro-bg" aria-hidden="true">
+      <source srcset="assets/img/hero-yacht-sm.webp" media="(max-width: 760px)" />
+      <img src="assets/img/hero-yacht.webp" alt="" />
+    </picture>
+    <div class="intro-shade" aria-hidden="true"></div>
+
+    <div class="maritime-grid" aria-hidden="true"></div>
+    <div class="sonar-compass" aria-hidden="true">
+      <span class="sonar-ring sonar-ring-a"></span>
+      <span class="sonar-ring sonar-ring-b"></span>
+      <span class="sonar-ring sonar-ring-c"></span>
+      <span class="sonar-sweep"></span>
+      <span class="sonar-blip blip-a"></span>
+      <span class="sonar-blip blip-b"></span>
+      <span class="sonar-blip blip-c"></span>
+    </div>
+
+    <div class="intro-content">
+      <p class="intro-kicker">Private Preview · Sonar Active</p>
+      <div class="intro-brand">
+        <span>AURELIA</span>
+        <em>YACHTS</em>
+      </div>
+      <p class="intro-copy">A cinematic yacht experience shaped by quiet water, precise craft and open-sea emotion.</p>
+      <div class="intro-actions">
+        <button class="btn btn-light" type="button" data-enter-sound>Enter with sound</button>
+        <button class="btn btn-ghost" type="button" data-enter-silent>Continue silent</button>
+      </div>
+    </div>
+
+    <div class="intro-coordinates" aria-hidden="true">
+      <span>43.2965° N</span>
+      <span>005.3698° E</span>
+      <span>DEPTH 084M</span>
+    </div>
+  </div>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <header class="site-header" data-header>
+    <a class="brand" href="#top" aria-label="Aurelia Yachts Startseite">
+      <span class="brand-kicker">AURELIA</span>
+      <span>YACHTS</span>
+    </a>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a href="#vision">Vision</a>
+      <a href="#craft">Craft</a>
+      <a href="#fleet">Fleet</a>
+      <a href="#sea">Open Sea</a>
+    </nav>
+    <a class="nav-cta" href="#contact">Enquire</a>
+  </header>
+
+  <button class="sound-toggle" type="button" data-sound-toggle aria-label="Sound umschalten" aria-pressed="false">
+    <span class="sound-dot"></span>
+    <span data-sound-label>Sound Off</span>
+  </button>
+
+  <main id="top">
+    <section class="hero section-dark" aria-label="AURELIA YACHTS Hero">
+      <picture class="hero-bg">
+        <source srcset="assets/img/hero-yacht-sm.webp" media="(max-width: 760px)" />
+        <img src="assets/img/hero-yacht.webp" alt="Luxusyacht auf ruhigem Meer bei Sonnenaufgang" />
+      </picture>
+      <div class="hero-shade"></div>
+      <div class="hero-content reveal-on-scroll">
+        <p class="eyebrow">Private Yacht Atelier · Since 1958</p>
+        <h1>Crafted beyond<br />the horizon.</h1>
+        <p class="hero-copy">A cinematic showcase for a fictional luxury yacht house — designed to feel precise, emotional and unmistakably premium.</p>
+        <div class="hero-actions">
+          <a class="btn btn-light" href="#vision">Explore the experience</a>
+          <a class="btn btn-ghost" href="#fleet">View fleet</a>
+        </div>
+      </div>
+      <div class="scroll-cue" aria-hidden="true">
+        <span>Scroll</span>
+        <i></i>
+      </div>
+    </section>
+
+    <section id="vision" class="cinema-section section-dark" data-cinema data-audio-zone="from" data-cinema-name="From Vision" aria-label="Cinematic Scroll Section From Vision">
+      <div class="cinema-sticky">
+        <video class="cinema-video" muted playsinline webkit-playsinline preload="auto" poster="assets/img/poster-from-vision.jpg" aria-label="Yacht entsteht von Blueprint bis Reveal">
+          <source src="assets/video/from-vision-scroll.mp4" type="video/mp4" />
+        </video>
+        <div class="cinema-overlay"></div>
+        <div class="cinema-vignette"></div>
+
+        <div class="cinema-ui">
+          <div class="cinema-progress" aria-hidden="true"><span></span></div>
+          <div class="cinema-count"><span data-current-scene>01</span><em>/ 05</em></div>
+        </div>
+
+        <div class="cinema-copy">
+          <article class="cinema-panel is-active" data-scene>
+            <p class="chapter">Section 01 · From Vision</p>
+            <h2>Blueprints become desire.</h2>
+            <p>Every line begins as intent: proportion, silhouette, balance and the quiet discipline of naval architecture.</p>
+          </article>
+          <article class="cinema-panel" data-scene>
+            <p class="chapter">Naval Architecture</p>
+            <h2>Designed with purpose.</h2>
+            <p>Structure, stability and long-range performance are shaped before the first surface is ever polished.</p>
+          </article>
+          <article class="cinema-panel" data-scene>
+            <p class="chapter">The Shipyard</p>
+            <h2>Precision takes form.</h2>
+            <p>Engineering becomes tangible through controlled craft, exact tolerances and material confidence.</p>
+          </article>
+          <article class="cinema-panel" data-scene>
+            <p class="chapter">Hand Finished</p>
+            <h2>Every detail earns its place.</h2>
+            <p>Teak, chrome, leather and glass are refined into a single language of understated luxury.</p>
+          </article>
+          <article class="cinema-panel" data-scene>
+            <p class="chapter">The Reveal</p>
+            <h2>A vessel with presence.</h2>
+            <p>The final form is not assembled. It is revealed — calm, powerful and unmistakably Aurelia.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="craft" class="intro-band section-light">
+      <div class="container two-col">
+        <div class="copy-block reveal-on-scroll">
+          <p class="eyebrow dark">Bespoke Craft</p>
+          <h2>Built for owners who expect more than luxury.</h2>
+          <p>AURELIA is positioned as a private yacht atelier: fewer vessels, deeper personalisation, and an obsessive relationship with materials, light and movement.</p>
+        </div>
+        <div class="stat-grid reveal-on-scroll">
+          <div><strong>01</strong><span>Owner-first concept</span></div>
+          <div><strong>24</strong><span>Months design journey</span></div>
+          <div><strong>360°</strong><span>Interior & exterior vision</span></div>
+          <div><strong>∞</strong><span>Made-to-measure details</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="image-story section-dark">
+      <div class="container image-story-grid">
+        <picture class="story-image reveal-on-scroll">
+          <source srcset="assets/img/craftsmanship-sm.webp" media="(max-width: 760px)" />
+          <img src="assets/img/craftsmanship.webp" alt="Handwerkliche Detailarbeit mit Teakholz und Chrom auf einer Luxusyacht" loading="lazy" />
+        </picture>
+        <div class="story-card reveal-on-scroll">
+          <p class="eyebrow">Material Culture</p>
+          <h2>Precision you can feel.</h2>
+          <p>From the satin grain of teak to the final reflection across polished chrome, each surface is designed to slow the eye down. This is where engineering becomes atmosphere.</p>
+          <ul class="premium-list">
+            <li>Hand-finished teak details</li>
+            <li>Brushed and mirror-polished metalwork</li>
+            <li>Quiet lighting architecture</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="interior-section section-light">
+      <div class="container split-feature">
+        <div class="feature-copy reveal-on-scroll">
+          <p class="eyebrow dark">Interior Experience</p>
+          <h2>Ocean living, curated like a private residence.</h2>
+          <p>Warm woods, low indirect light and panoramic glazing create a living environment that feels intimate at anchor and cinematic at sea.</p>
+        </div>
+        <picture class="feature-image reveal-on-scroll">
+          <source srcset="assets/img/interior-salon-sm.webp" media="(max-width: 760px)" />
+          <img src="assets/img/interior-salon.webp" alt="Luxuriöser Yacht-Salon mit Meerblick bei Sonnenuntergang" loading="lazy" />
+        </picture>
+      </div>
+    </section>
+
+    <section class="deck-section section-dark">
+      <picture class="deck-bg">
+        <source srcset="assets/img/aft-deck-sm.webp" media="(max-width: 760px)" />
+        <img src="assets/img/aft-deck.webp" alt="Luxuriöses Yachtdeck bei Sonnenuntergang" loading="lazy" />
+      </picture>
+      <div class="deck-overlay"></div>
+      <div class="container deck-content reveal-on-scroll">
+        <p class="eyebrow">Aft Deck Rituals</p>
+        <h2>Every journey needs a golden hour.</h2>
+        <p>The website shifts from technical trust into pure emotion — showing not just the yacht, but the feeling of ownership.</p>
+      </div>
+    </section>
+
+    <section id="fleet" class="fleet section-light">
+      <div class="container">
+        <div class="section-heading reveal-on-scroll">
+          <p class="eyebrow dark">Private Fleet</p>
+          <h2>Three expressions of one design language.</h2>
+          <p>Clean model cards for a polished commercial website flow — ideal for lead generation after the cinematic brand experience.</p>
+        </div>
+        <div class="fleet-grid">
+          <article class="fleet-card reveal-on-scroll">
+            <picture>
+              <source srcset="assets/img/fleet-sport-45-sm.webp" media="(max-width: 760px)" />
+              <img src="assets/img/fleet-sport-45.webp" alt="AURELIA 45M Sport Yacht" loading="lazy" />
+            </picture>
+            <div>
+              <span>45M · Sport</span>
+              <h3>AURELIA S45</h3>
+              <p>Fast, sculpted and intimate — designed for owners who want agile coastal escapes with superyacht presence.</p>
+            </div>
+          </article>
+          <article class="fleet-card reveal-on-scroll">
+            <picture>
+              <source srcset="assets/img/fleet-explorer-62-sm.webp" media="(max-width: 760px)" />
+              <img src="assets/img/fleet-explorer-62.webp" alt="AURELIA 62M Explorer Yacht" loading="lazy" />
+            </picture>
+            <div>
+              <span>62M · Explorer</span>
+              <h3>AURELIA X62</h3>
+              <p>Longer range, more volume and quiet capability — an elegant platform for extended ocean travel.</p>
+            </div>
+          </article>
+          <article class="fleet-card reveal-on-scroll">
+            <picture>
+              <source srcset="assets/img/fleet-flagship-80-sm.webp" media="(max-width: 760px)" />
+              <img src="assets/img/fleet-flagship-80.webp" alt="AURELIA 80M Flagship Superyacht" loading="lazy" />
+            </picture>
+            <div>
+              <span>80M · Flagship</span>
+              <h3>AURELIA F80</h3>
+              <p>A commanding silhouette with expansive decks, panoramic glass and the calm authority of an ocean icon.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="sea" class="cinema-section section-dark" data-cinema data-audio-zone="sea" data-cinema-name="To Open Sea" aria-label="Cinematic Scroll Section To Open Sea">
+      <div class="cinema-sticky">
+        <video class="cinema-video" muted playsinline webkit-playsinline preload="auto" poster="assets/img/poster-to-open-sea.jpg" aria-label="Yacht verlässt die Marina und fährt auf offene See">
+          <source src="assets/video/to-open-sea-scroll.mp4" type="video/mp4" />
+        </video>
+        <div class="cinema-overlay sea-overlay"></div>
+        <div class="cinema-vignette"></div>
+
+        <div class="cinema-ui">
+          <div class="cinema-progress" aria-hidden="true"><span></span></div>
+          <div class="cinema-count"><span data-current-scene>01</span><em>/ 04</em></div>
+        </div>
+
+        <div class="cinema-copy right-copy">
+          <article class="cinema-panel is-active" data-scene>
+            <p class="chapter">Section 02 · To Open Sea</p>
+            <h2>The marina falls quiet.</h2>
+            <p>Still water, warm light and the first hint of movement. Luxury begins before the voyage accelerates.</p>
+          </article>
+          <article class="cinema-panel" data-scene>
+            <p class="chapter">Departure</p>
+            <h2>Presence in motion.</h2>
+            <p>The yacht leaves the harbour with the calm confidence of a vessel designed to be watched.</p>
+          </article>
+          <article class="cinema-panel" data-scene>
+            <p class="chapter">Ocean Run</p>
+            <h2>Power without noise.</h2>
+            <p>Wake, glass and sunlight become the cinematic language of performance.</p>
+          </article>
+          <article class="cinema-panel" data-scene>
+            <p class="chapter">Sunset Finale</p>
+            <h2>Built for the horizon.</h2>
+            <p>The final chapter is emotional: open sea, golden light and a brand promise that feels larger than the vessel.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="final-cta section-dark">
+      <picture class="cta-bg">
+        <source srcset="assets/img/cta-horizon-sm.webp" media="(max-width: 760px)" />
+        <img src="assets/img/cta-horizon.webp" alt="Luxusyacht fährt bei Sonnenuntergang in Richtung Horizont" loading="lazy" />
+      </picture>
+      <div class="cta-overlay"></div>
+      <div class="container final-content reveal-on-scroll">
+        <p class="eyebrow">Begin Your Journey</p>
+        <h2>Commission your next icon.</h2>
+        <p>A fictional brand website built as a high-end showcase for cinematic web design, scroll storytelling and luxury lead generation.</p>
+        <a class="btn btn-light" href="mailto:hello@aurelia-yachts.example">Request a private consultation</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer section-dark">
+    <div class="container footer-inner">
+      <div>
+        <strong>AURELIA YACHTS</strong>
+        <p>Crafted Beyond the Horizon</p>
+      </div>
+      <p>Showcase website concept · Built for Kaiser Webdesign ads</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js?v=header-fullwidth-final" defer></script>
+</body>
+</html>
