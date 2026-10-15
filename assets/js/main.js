@@ -107,6 +107,7 @@
     introClosed = true;
     document.body.classList.add('has-entered');
     document.body.classList.remove('is-intro-open');
+    document.dispatchEvent(new Event('aurelia:entered'));
     setTimeout(() => {
       const intro = document.querySelector('[data-intro]');
       if (intro) intro.setAttribute('aria-hidden', 'true');
