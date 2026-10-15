@@ -26,6 +26,16 @@
   let cursorNeedsUpdate = false;
   let audioEnabled = false;
   let introClosed = false;
+  let lastFrameTime = 0;
+
+  // Seconds-based damping feels the same on 60 Hz and high-refresh displays.
+  const motion = {
+    response: isCoarsePointer ? 0.32 : 0.28,
+    maxProgressPerSecond: 0.14,
+    settleThreshold: 0.0003,
+    sceneHysteresis: 0.006,
+    seekThreshold: 1 / 48,
+  };
 
   const audio = {
     ocean: createAudio('assets/audio/ocean-bg.mp3', { loop: true, volume: 0 }),
@@ -161,9 +171,11 @@
         height: 1,
         duration: 0,
         progress: 0,
+        targetProgress: 0,
+        frameProgress: 0,
         activeIndex: -1,
         isVisible: false,
-        seekThreshold: isCoarsePointer ? 0.075 : 0.045,
+        primed: false,
       };
 
       video.addEventListener('loadedmetadata', () => {
@@ -176,6 +188,15 @@
         video.pause();
         needsUpdate = true;
       }, { once: true });
+
+      video.addEventListener("seeked", () => {
+        const duration = item.duration || video.duration;
+        if (Number.isFinite(duration) && duration > 0) {
+          item.frameProgress = clamp(
+            video.currentTime / Math.max(0.001, duration - 0.08),
+          );
+        }
+      });
 
       cinemaItems.push(item);
     });
@@ -198,42 +219,103 @@
     header.classList.toggle('is-scrolled', scrollY > 44);
   }
 
-  function updateCinemaItem(item) {
+  function updateCinemaTarget(item) {
     const travel = Math.max(1, item.height - viewportHeight);
-    const rawProgress = (scrollY - item.top) / travel;
-    const progress = clamp(rawProgress);
-    const visible = scrollY + viewportHeight > item.top && scrollY < item.top + item.height;
+    const wasVisible = item.isVisible;
+    item.targetProgress = clamp((scrollY - item.top) / travel);
+    item.isVisible =
+      scrollY + viewportHeight > item.top && scrollY < item.top + item.height;
 
-    item.progress = progress;
-    item.isVisible = visible;
+    // Anchors and re-entry start at the right point; only continuous scrolling trails.
+    if (!item.isVisible || !wasVisible || prefersReducedMotion) {
+      item.progress = item.targetProgress;
+    }
+  }
 
+  function updateCinemaPresentation(item, progress) {
     if (item.progressBar) {
       item.progressBar.style.transform = `scaleX(${progress.toFixed(4)})`;
     }
 
     const sceneCount = item.panels.length;
-    const nextIndex = Math.min(sceneCount - 1, Math.floor(progress * sceneCount));
+    const nextIndex = Math.min(
+      sceneCount - 1,
+      Math.floor(progress * sceneCount),
+    );
+    if (nextIndex === item.activeIndex) return;
 
-    if (nextIndex !== item.activeIndex) {
-      item.panels.forEach((panel, index) => panel.classList.toggle('is-active', index === nextIndex));
-      item.activeIndex = nextIndex;
-      if (item.currentScene) item.currentScene.textContent = String(nextIndex + 1).padStart(2, '0');
-    }
+    // A tiny dead band prevents flickering when hovering on a chapter boundary.
+    if (
+      item.activeIndex >= 0 &&
+      nextIndex > item.activeIndex &&
+      progress < (item.activeIndex + 1) / sceneCount + motion.sceneHysteresis
+    )
+      return;
+    if (
+      item.activeIndex >= 0 &&
+      nextIndex < item.activeIndex &&
+      progress > item.activeIndex / sceneCount - motion.sceneHysteresis
+    )
+      return;
 
+    const previousIndex = item.activeIndex;
+    item.panels.forEach((panel, index) => {
+      panel.classList.toggle(
+        "is-leaving",
+        index === previousIndex && index !== nextIndex,
+      );
+      panel.classList.toggle("is-active", index === nextIndex);
+    });
+    item.activeIndex = nextIndex;
+    if (item.currentScene)
+      item.currentScene.textContent = String(nextIndex + 1).padStart(2, "0");
+  }
+
+  function updateCinemaItem(item, deltaTime) {
     const video = item.video;
-    const duration = item.duration || (Number.isFinite(video.duration) ? video.duration : 0);
-    if (!visible || !duration || video.readyState < 1 || prefersReducedMotion) return;
+    const duration =
+      item.duration || (Number.isFinite(video.duration) ? video.duration : 0);
 
-    const safeDuration = Math.max(0, duration - 0.08);
-    const targetTime = safeDuration * progress;
-
-    if (Math.abs(video.currentTime - targetTime) > item.seekThreshold) {
-      try {
-        video.currentTime = targetTime;
-      } catch (error) {
-        // Some mobile browsers briefly reject seeks before metadata is fully ready.
+    if (!prefersReducedMotion && item.isVisible) {
+      const distance = item.targetProgress - item.progress;
+      const easedStep = distance * (1 - Math.exp(-deltaTime / motion.response));
+      const maxStep = motion.maxProgressPerSecond * deltaTime;
+      item.progress = clamp(
+        item.progress + clamp(easedStep, -maxStep, maxStep),
+      );
+      if (
+        Math.abs(item.targetProgress - item.progress) < motion.settleThreshold
+      ) {
+        item.progress = item.targetProgress;
       }
     }
+
+    const canScrub =
+      item.isVisible &&
+      duration > 0 &&
+      video.readyState >= 2 &&
+      !prefersReducedMotion;
+    if (canScrub) {
+      const targetTime = Math.max(0, duration - 0.08) * item.progress;
+      // Finish decoding the current seek before submitting a new one. The next
+      // frame always uses the newest eased target, never a queue of old positions.
+      if (
+        !video.seeking &&
+        Math.abs(video.currentTime - targetTime) > motion.seekThreshold
+      ) {
+        try {
+          video.currentTime = targetTime;
+        } catch (error) {
+          // Metadata and decoding can briefly be unavailable on mobile browsers.
+        }
+      }
+    }
+
+    // Copy and chapter count follow the decoded movie, not the raw wheel input.
+    updateCinemaPresentation(
+      item,
+      canScrub ? item.frameProgress : item.progress,
+    );
   }
 
   function sectionVisibilityAmount(section) {
@@ -286,14 +368,19 @@
     cursorNeedsUpdate = false;
   }
 
-  function render() {
+  function render(now) {
+    const deltaTime = lastFrameTime
+      ? Math.min((now - lastFrameTime) / 1000, 0.05)
+      : 1 / 60;
+    lastFrameTime = now;
     if (needsUpdate) {
       scrollY = window.scrollY || window.pageYOffset;
       updateHeader();
-      cinemaItems.forEach(updateCinemaItem);
+      cinemaItems.forEach(updateCinemaTarget);
       needsUpdate = false;
     }
 
+    cinemaItems.forEach((item) => updateCinemaItem(item, deltaTime));
     updateAudio();
     updateCursor();
     requestAnimationFrame(render);
@@ -307,17 +394,21 @@
   function unlockVideos() {
     cinemaItems.forEach((item) => {
       const video = item.video;
+      if (item.primed) return;
+      item.primed = true;
       video.muted = true;
       video.playsInline = true;
       try {
         const promise = video.play();
-        if (promise && typeof promise.then === 'function') {
-          promise.then(() => {
-            video.pause();
-            if (video.readyState >= 1 && video.currentTime === 0) {
-              video.currentTime = 0.01;
-            }
-          }).catch(() => {});
+        if (promise && typeof promise.then === "function") {
+          promise
+            .then(() => {
+              video.pause();
+              if (video.readyState >= 1 && video.currentTime === 0) {
+                video.currentTime = 0.01;
+              }
+            })
+            .catch(() => {});
         }
       } catch (error) {}
     });

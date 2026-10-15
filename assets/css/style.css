@@ -749,7 +749,7 @@ p {
 .title-line > span {
   display: block;
   transform: translateY(115%);
-  transition: transform 1.8s var(--ease);
+  transition: transform 2.25s var(--ease);
   transition-delay: 0.35s;
 }
 .title-line:nth-child(2) > span {
@@ -1037,7 +1037,7 @@ details > p {
   height: 100%;
   object-fit: cover;
   transition:
-    opacity 0.35s,
+    opacity 0.6s,
     transform 1.5s var(--ease);
 }
 .gallery-stage:hover .gallery-image {
@@ -1240,7 +1240,7 @@ details > p {
   height: 100%;
   object-fit: cover;
   transition:
-    opacity 0.35s,
+    opacity 0.6s,
     transform 1.8s var(--ease);
 }
 .fleet-feature.is-changing img {
@@ -1577,8 +1577,8 @@ dialog[open] {
   opacity: 0;
   transform: translate3d(0, 32px, 0);
   transition:
-    opacity 1.1s var(--ease),
-    transform 1.3s var(--ease);
+    opacity 1.4s var(--ease),
+    transform 1.65s var(--ease);
 }
 .js-ready .reveal-on-scroll.is-visible {
   opacity: 1;
@@ -1591,8 +1591,8 @@ dialog[open] {
 }
 .cinema-section {
   position: relative;
-  height: 540vh;
-  min-height: 2600px;
+  height: 720svh;
+  min-height: 3400px;
 }
 .cinema-sticky {
   position: sticky;
@@ -1668,16 +1668,26 @@ dialog[open] {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transform: translate3d(0, 36px, 0);
+  transform: translate3d(0, 18px, 0);
+  visibility: hidden;
   transition:
-    opacity 0.55s var(--ease),
-    transform 0.65s var(--ease);
+    opacity 0.45s ease,
+    transform 0.75s var(--ease),
+    visibility 0s linear 0.75s;
   pointer-events: none;
 }
 .cinema-panel.is-active {
   opacity: 1;
   transform: translate3d(0, 0, 0);
+  visibility: visible;
   pointer-events: auto;
+  transition:
+    opacity 0.95s ease 0.18s,
+    transform 1.2s var(--ease) 0.18s,
+    visibility 0s;
+}
+.cinema-panel.is-leaving {
+  transform: translate3d(0, -12px, 0);
 }
 .cinema-panel .chapter {
   color: var(--gold-2);
@@ -1722,6 +1732,7 @@ dialog[open] {
   transform: scaleX(0);
   background: linear-gradient(90deg, transparent, var(--gold-2), #fff1c7);
   will-change: transform;
+  transition: transform 0.12s linear;
 }
 .cinema-count {
   min-width: 78px;
@@ -1735,7 +1746,7 @@ dialog[open] {
   font-style: normal;
 }
 
-/* The film geometry and transitions above are preserved from the original. */
+/* Shared editorial typography for both scroll-film sequences. */
 .cinema-panel h2 {
   font-family: Cormorant, Georgia, serif;
   font-weight: 300;
@@ -1755,12 +1766,6 @@ dialog[open] {
 }
 .cinema-count {
   font-family: Cormorant, serif;
-}
-.cinema-panel {
-  visibility: hidden;
-}
-.cinema-panel.is-active {
-  visibility: visible;
 }
 @media (min-width: 1800px) {
   .hero {
@@ -1806,8 +1811,8 @@ dialog[open] {
 }
 @media (max-width: 980px) {
   .cinema-section {
-    height: 430vh;
-    min-height: 2100px;
+    height: 570svh;
+    min-height: 2800px;
   }
   .cinema-sticky {
     min-height: 100svh;
