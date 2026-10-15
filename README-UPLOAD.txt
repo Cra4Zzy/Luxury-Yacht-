@@ -1,60 +1,34 @@
-AURELIA YACHTS — Maritime Sonar Sound Edition
+AURELIA YACHTS — The Private Atelier Edition
 
-Basis:
-- Diese Version wurde aus deiner neu hochgeladenen aurelia-yachts-showcase(1).zip gebaut.
+Independent fictional yacht-house concept for Kaiser Webdesign.
+Static HTML, CSS and JavaScript; no build step or external CDN required.
 
-Änderungen:
-- Echte Sound-Dateien eingebaut.
-- Sound startet nur nach Klick auf "Enter with sound" oder später über den Sound-Toggle.
-- Maritimer Sonar-Startscreen ohne fetten Container.
-- Startscreen mit Yacht-Hintergrund, Sonar-Ringen, Sweep, Blips, Koordinaten und ruhiger Premium-Typografie.
-- Header bleibt nahe an der früheren/klassischeren Version.
-- Scroll-Video-Logik bleibt erhalten.
+Deployment
+- Serve index.html from the web root and upload the entire assets/ directory.
+- assets/fonts/ includes self-hosted Cormorant Garamond and Manrope fonts.
+- Font license texts are included alongside the font files.
 
-Sound-Zuordnung:
-- ocean-bg.mp3 = Hintergrund-Meeresrauschen.
-- from-vision-score.mp3 = erste Scroll-Animation "From Vision".
-- to-open-sea-score.mp3 = zweite Scroll-Animation "To Open Sea".
-- sonar-intro.mp3 = Sonar-Eingangsanimation.
+Design and interaction
+- Editorial typography, a custom Aurelia monogram and a considered navy/ivory palette.
+- Preserved From Vision and To Open Sea scroll-film geometry, scene transitions,
+  video seeking and sound mixing. The core film controller remains in main.js.
+- Atelier interactions are isolated in assets/js/atelier.js.
+- Three-model collection with image transitions, concept details and keyboard tabs.
+- Material accordion, image carousel with touch swiping and fullscreen image viewer.
+- Responsive navigation, native dialogs, focus management and reduced-motion support.
+- Contact form previews an enquiry locally. It has no backend, sends nothing and
+  does not store personal details. Connect a real destination before client use.
 
-Upload:
-- Lade den INHALT des Ordners "aurelia-yachts-showcase" hoch.
-- index.html muss direkt im Root liegen.
-- assets/css, assets/js, assets/img, assets/video und assets/audio vollständig hochladen.
+Audio
+- Sound starts only after Enter with sound or the sound toggle is selected.
+- ocean-bg.mp3: ambient sea sound
+- from-vision-score.mp3 / to-open-sea-score.mp3: cinematic section scores
+- sonar-intro.mp3: introductory sonar
+- Original media files are unchanged. Confirm that the existing audio/image/video
+  licenses cover the intended public, advertising and customer use.
 
-Lizenz:
-Bitte sicherstellen, dass die verwendeten Epidemic-Sound-Dateien für Website, Werbung und Kundenprojekte korrekt lizenziert sind.
-
-Test:
-- Nach Upload Cache löschen oder im Inkognito-Fenster testen.
-
-
-Header-Fix:
-- Header wurde auf stabilen Flex-Aufbau umgestellt.
-- Breite: calc(100vw - 48px), max-width 1240px.
-- Logo links, Navigation sauber zentriert, CTA rechts.
-- Mobile: Navigation wird ausgeblendet, Header bleibt sauber.
-
-
-Clean Header Update:
-- Kein Pill-Header mehr.
-- Freier, transparenter Hero-Header über die volle Breite.
-- Logo links, Navigation mittig, CTA rechts – wie im Referenzscreen.
-
-
-Enquire Button Fix:
-- CTA im Header wurde flacher, schmaler und sauber zentriert.
-- Kein klobiges Oval mehr.
-
-
-Header 1:1 Reference Update:
-- Header-HTML aus der hochgeladenen Referenzversion übernommen.
-- Alte Pill-/Clean-/Button-Overrides entfernt.
-- Header-CSS auf Referenzlogik zurückgesetzt:
-  top gradient, flex space-between, Logo links, Navigation, CTA rechts.
-
-
-Final Header Full-Width Fix:
-- Alte begrenzte Header-Breite wurde final überschrieben.
-- Header nutzt jetzt left: 0; right: 0; width: auto; max-width: none.
-- Damit läuft der Header wieder über die volle Viewport-Breite wie in der Referenz.
+Checks
+- Open via an HTTP server and check desktop and mobile layouts.
+- Test both scroll films from beginning to end, including reverse scrolling.
+- Test collection tabs with arrow keys, gallery controls, menu and enquiry preview.
+- Try reduced motion and keyboard-only navigation.
