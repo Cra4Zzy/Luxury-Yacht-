@@ -180,7 +180,7 @@
       const image = await loadImage(slide.image);
       if (request !== galleryRequest) return;
       gallery.classList.add("is-changing");
-      await pause(300);
+      await pause(600);
       if (request !== galleryRequest) return;
       galleryImage.src = image.src;
       galleryImage.alt = slide.alt;
@@ -295,7 +295,7 @@
       const image = await loadImage(model.image);
       if (request !== fleetRequest) return;
       fleetPanel.classList.add("is-changing");
-      await pause(300);
+      await pause(600);
       if (request !== fleetRequest) return;
       const img = $("[data-fleet-image]");
       img.src = image.src;
